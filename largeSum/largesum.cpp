@@ -2,7 +2,7 @@
  * largeSum.cpp
  *
  *  Created on: Jan 23, 2018
- *  Author: Kexian Wu
+ *  Author: Dylan DiGeronimo, Jacob Fallin, Kexian Wu
  *  I pledge my honor that I have abided by the Stevens Honor System.
  */
 
