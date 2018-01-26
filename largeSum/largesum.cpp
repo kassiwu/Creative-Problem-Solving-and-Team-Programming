@@ -16,6 +16,8 @@ using namespace std;
 
 
 int main(int argc, const char *argv[]) {
+	ios::sync_with_stdio(false);
+	cin.tie(NULL);
 	clock_t time = clock();
 	// Make sure the right number of command line arguments exist.
     if (argc != 2) {
