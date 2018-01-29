@@ -28,58 +28,62 @@ int main(int argc, const char *argv[]) {
     // Create an ifstream object.
     ifstream input_file(argv[1]);
     // Read a single number as a string
-	string line;
+		string line;
 
     if (input_file) {
-    	    // highest digits might overflow
-    		const unsigned int digitLength  = 50 + 3;
+			  // there are 0 to 200 non-negative integers in the file
+    	  // add 3 spare digits becaus highest digit might overflow
+    		const size_t digitLength  = 50 + 3;
     		// all digits are initially zero, least significant digit has index 0
-    		vector<unsigned long> fullSum(digitLength);
+    		vector<size_t> fullSum(digitLength);
 
     		// Use getline to read in a line.
     		while (getline(input_file, line)) {
     			// process string in reverse, least significant digit has index 0
-    			vector<unsigned int> temp;
+    			vector<size_t> temp;
     			for (int i = line.length()-1; i >=0; i--){
     				temp.push_back(line[i] - '0');
     			}
     			// inserting zeros at the end as many elements as needed to reach a size of fullSum.
-    			temp.resize(fullSum.size(), 0);
+    			temp.resize(digitLength, 0);
     			// add to fullSum
-    		    for (unsigned int i = 0; i < temp.size(); i++){
-    		    		fullSum[i] += temp[i];
-    		    		if (fullSum[i] >= 10) {
-    		    			fullSum[i] -= 10;
-    		    			fullSum[i+1] += 1;
-    		    		}
-    		    }
+    		  for (unsigned int i = 0; i < temp.size(); i++){
+						fullSum[i] += temp[i];
+						if (fullSum[i] >= 10) {
+							fullSum[i] -= 10;
+    		   		fullSum[i+1] += 1;
+						}
+					}
     	 }
 
     	 string result;
     	 // iterating over a vector in reverse direction	, most significant digit comes before least significant digit
-    	 vector<unsigned long>::reverse_iterator i = fullSum.rbegin();
+    	 vector<size_t>::reverse_iterator i = fullSum.rbegin();
     	 for (; i!= fullSum.rend(); ++i) {
     		 result += to_string(*i);
     	  }
+				if (result.find_first_not_of("0") == std::string::npos) {
+					cout << "Full sum: " << "0" << endl;
+					cout << "First 10 digits: " << "0" << endl;
+				}
+				else {
+					size_t found = result.find_first_not_of("0");
+					string FullSumStr = result.substr(found, digitLength-found);
+	     	 	cout << "Full sum: " << FullSumStr << endl;
+	     	 	if (FullSumStr.length() > 10) {
+						cout << "First 10 digits: " << FullSumStr.substr(0,10) << endl;
+	     	 }
+	     	 else {
+	     		 cout << "First 10 digits: " << FullSumStr << endl;
+	     	 }
+				}
 
-    	 size_t found = result.find_first_not_of("0");
-    	 string FullSumStr = result.substr(found, digitLength-found);
-    	 cout << "Full sum: " << FullSumStr << endl;
-    	 if (FullSumStr.length() > 10) {
-        	 cout << "First 10 digits: " << FullSumStr.substr(0,10) << endl;
-    	 }
-    	 else {
-    		 cout << "Full sum: " << FullSumStr << endl;
-    	 }
 
     	input_file.close();
 
     	time = clock() - time;
-    	cout << 	"Elapsed time: " << time <<" ms";
+    	// cout << 	"Elapsed time: " << time <<" ms";
     	return 0;
-
-
-
     }
     // If it does not exist, print an error message.
     else {

@@ -1,0 +1,2 @@
+Full sum: 21
+First 10 digits: 21
