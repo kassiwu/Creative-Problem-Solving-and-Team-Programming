@@ -1,8 +1,8 @@
 /*
  * largeSum.cpp
  *
- *  Created on: Jan 23, 2018
  *  Author: Dylan DiGeronimo, Jacob Fallin, Kexian Wu
+ *  Jan 29, 2018
  *  I pledge my honor that I have abided by the Stevens Honor System.
  */
 
@@ -57,23 +57,27 @@ int main(int argc, const char *argv[]) {
     	 }
 
     	 string result;
-    	 // iterating over a vector in reverse direction	, most significant digit comes before least significant digit
+    	 // iterating over a vector in reverse direction, most significant digit comes before least significant digit
     	 vector<size_t>::reverse_iterator i = fullSum.rbegin();
     	 for (; i!= fullSum.rend(); ++i) {
     		 result += to_string(*i);
     	  }
+				// print results
+				// the case when no such a character is found
 				if (result.find_first_not_of("0") == std::string::npos) {
 					cout << "Full sum: " << "0" << endl;
 					cout << "First 10 digits: " << "0" << endl;
 				}
 				else {
+					// the case when such a characters is found
 					size_t found = result.find_first_not_of("0");
 					string FullSumStr = result.substr(found, digitLength-found);
 	     	 	cout << "Full sum: " << FullSumStr << endl;
-	     	 	if (FullSumStr.length() > 10) {
+					//print out first 10 digits
+					if (FullSumStr.length() > 10) {
 						cout << "First 10 digits: " << FullSumStr.substr(0,10) << endl;
 	     	 }
-	     	 else {
+				 else {
 	     		 cout << "First 10 digits: " << FullSumStr << endl;
 	     	 }
 				}
