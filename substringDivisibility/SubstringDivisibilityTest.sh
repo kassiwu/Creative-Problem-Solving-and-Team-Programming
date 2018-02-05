@@ -1,68 +1,60 @@
 #!/bin/bash
-
-file=SubstringDivisibility.java
-
-if [ ! -f "$file" ]; then
-    echo -e "Error: File '$file' not found.\nTest failed."
-    exit 1
+if [ ! -f "SubstringDivisibility.class" ]; then
+    javac SubstringDivisibility.java
 fi
 
-num_right=0
+
 total=0
-line="________________________________________________________________________"
-compiler=
-interpreter=
-language=
-extension=${file##*.}
-if [ "$extension" = "py" ]; then
-    if [ ! -z "$PYTHON_PATH" ]; then
-        interpreter=$(which python.exe)
-    else
-        interpreter=$(which python3.2)
-    fi
-    command="$interpreter $file"
-    echo -e "Testing $file\n"
-elif [ "$extension" = "java" ]; then
-    language="java"
-    command="java ${file%.java}"
-    echo -n "Compiling $file..."
-    javac $file
-    echo -e "done\n"
-elif [ "$extension" = "c" ] || [ "$extension" = "cpp" ]; then
-    language="c"
-    command="./${file%.*}"
-    echo -n "Compiling $file..."
-    results=$(make 2>&1)
-    if [ $? -ne 0 ]; then
-        echo -e "\n$results"
-        exit 1
-    fi
-    echo -e "done\n"
+num_right=0
+
+received="$(java SubstringDivisibility 123)"
+(( ++total ))
+if [ "$received" = "The total digits of the input number should be between 4 and 10" ]; then
+    echo "Testing passed: 123"
+    (( ++num_right ))
+else
+    echo "Testing failed: 123"
 fi
 
 
-run_test_args() {
-    (( ++total ))
-    echo -n "Running test $total..."
-    expected=$2
-    received=$( $command $1 2>&1 | tr -d '\r' | sed -n '$!p')
-    if [ "$expected" = "$received" ]; then
-        echo "success"
-        (( ++num_right ))
-    else
-        echo -e "failure\n\nExpected$line\n$expected\nReceived$line\n$received\n"
-    fi
-}
+received="$(java SubstringDivisibility 1234 5678)"
+(( ++total ))
+if [ "$received" =  "Wrong number of args" ]; then
+    echo "Testing passed: 1234 5678"
+    (( ++num_right ))
+else
+    echo "Testing failed: 1234 5678"
+fi
 
-run_test_args "0123456789" "1406357289
+received="$(java SubstringDivisibility abcd)"
+(( ++total ))
+if [ "$received" = "Input value must be an integer" ]; then
+    echo "Testing passed: abcd"
+    (( ++num_right ))
+else
+    echo "Testing failed: abcd"
+fi
+
+
+received="$(java SubstringDivisibility 0123456789)"
+(( ++total ))
+if [[ "$received" = "1406357289
 1430952867
 1460357289
 4106357289
 4130952867
 4160357289
-Sum: 16695334890"
+Sum: 16695334890"* ]]; then
+    echo "Testing passed: 0123456789"
+    (( ++num_right ))
+else
+    echo "Testing failed: 0123456789"
+fi
 
-run_test_args "0123" "0132
+
+received="$(java SubstringDivisibility 0123)"
+(( ++total ))
+if [[ "$received" = "0132
 0312
 1032
 1230
@@ -74,9 +66,17 @@ run_test_args "0123" "0132
 3102
 3120
 3210
-Sum: 22212"
+Sum: 22212"* ]]; then
+    echo "Testing passed: 0132"
+    (( ++num_right ))
+else
+    echo "Testing failed: 0132"
+fi
 
-run_test_args "0213" "0132
+
+received="$(java SubstringDivisibility 0213)"
+(( ++total ))
+if [[ "$received" = "0132
 0312
 1032
 1230
@@ -88,9 +88,17 @@ run_test_args "0213" "0132
 3102
 3120
 3210
-Sum: 22212"
+Sum: 22212"* ]]; then
+    echo "Testing passed: 0213"
+    (( ++num_right ))
+else
+    echo "Testing failed: 0213"
+fi
 
-run_test_args "1234" "1234
+
+received="$(java SubstringDivisibility 1234)"
+(( ++total ))
+if [[ "$received" = "1234
 1324
 1342
 1432
@@ -102,19 +110,51 @@ run_test_args "1234" "1234
 3412
 4132
 4312
-Sum: 31116"
+Sum: 31116"* ]]; then
+    echo "Testing passed: 1234"
+    (( ++num_right ))
+else
+    echo "Testing failed: 1234"
+fi
 
-run_test_args "1357" "Sum: 0"
 
-run_test_args "123456789" "149635728
+received="$(java SubstringDivisibility 1357)"
+(( ++total ))
+if [[ "$received" = "Sum: 0"* ]]; then
+    echo "Testing passed: 1357"
+    (( ++num_right ))
+else
+    echo "Testing failed: 1357"
+fi
+
+
+received="$(java SubstringDivisibility 123456789)"
+(( ++total ))
+if [[ "$received" = "149635728
 419635728
-Sum: 569271456"
+Sum: 569271456"* ]]; then
+    echo "Testing passed: 123456789"
+(( ++num_right ))
+else
+    echo "Testing failed: 123456789"
+fi
 
-run_test_args "915623874" "149635728
+
+received="$(java SubstringDivisibility 915623874)"
+(( ++total ))
+if [[ "$received" = "149635728
 419635728
-Sum: 569271456"
+Sum: 569271456"* ]]; then
+    echo "Testing passed: 915623874"
+    (( ++num_right ))
+else
+    echo "Testing failed: 915623874"
+fi
 
-run_test_args "09876" "06789
+
+received="$(java SubstringDivisibility 09876)"
+(( ++total ))
+if [[ "$received" = "06789
 06987
 09687
 09768
@@ -142,9 +182,17 @@ run_test_args "09876" "06789
 96708
 96780
 96807
-Sum: 1867620"
+Sum: 1867620"* ]]; then
+    echo "Testing passed: 09876"
+    (( ++num_right ))
+else
+    echo "Testing failed: 09876"
+fi
 
-run_test_args "1265" "1256
+
+received="$(java SubstringDivisibility 1265)"
+(( ++total ))
+if [[ "$received" = "1256
 1526
 1562
 1652
@@ -156,21 +204,25 @@ run_test_args "1265" "1256
 5612
 6152
 6512
-Sum: 44448"
+Sum: 44448"* ]]; then
+    echo "Testing passed: 1265"
+    (( ++num_right ))
+else
+    echo "Testing failed: 1265"
+fi
 
-run_test_args "976543210" "Sum: 0"
+
+received="$(java SubstringDivisibility 976543210)"
+(( ++total ))
+if [[ "$received" = "Sum: 0"* ]]; then
+    echo "Testing passed: 976543210"
+    (( ++num_right ))
+else
+    echo "Testing failed: 976543210"
+fi
+
 
 echo -e "\nTotal tests run: $total"
 echo -e "Number correct : $num_right"
 echo -n "Percent correct: "
 echo "scale=2; 100 * $num_right / $total" | bc
-
-if [ "$language" = "java" ]; then
-    echo -e -n "\nRemoving class files..."
-    rm -f *.class
-    echo "done"
-elif [ "$language" = "c" ]; then
-    echo -e -n "\nCleaning project..."
-    make clean > /dev/null 2>&1
-    echo "done"
-fi
