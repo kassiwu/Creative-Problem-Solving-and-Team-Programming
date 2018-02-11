@@ -1,0 +1,133 @@
+Testcases
+
+=====Test 1=====
+3
+add apple
+add blueberry
+find pear
+
+Output:
+0
+
+
+=====Test 2=====
+2
+add apple
+find apple
+
+Output:
+1
+
+
+=====Test 3=====
+1
+find apple
+
+Output:
+0
+
+
+=====Test 4=====
+4
+add strawberry
+add blueberry
+add blackberry
+find berry
+
+Output:
+0
+
+
+=====Test 5=====
+6
+add banana
+add bamboo
+add bagel
+add bean
+find b
+find ba
+
+Output:
+4
+3
+
+=====Test 6=====
+4
+add lose
+add loose
+find lo
+find loo
+
+Output:
+2
+1
+
+=====Test 7=====
+11
+add b
+add bb
+add bbb
+add bbbb
+add bbbbb
+find b
+find bb
+find bbb
+find bbbb
+find bbbbb
+find bbbbbb
+
+Output:
+5
+4
+3
+2
+1
+0
+
+
+=====Test 8=====
+7
+add aaa
+add aa
+add a
+find aaaa
+find aaa
+find aa
+find a
+
+Output:
+0
+1
+2
+3
+
+
+=====Test 9=====
+8
+add contend
+add content
+add context
+add contest
+find con
+find count
+find cont
+find conten
+
+Output:
+4
+0
+4
+2
+
+=====Test 10=====
+5
+add dessert
+add desert
+find des
+find dess
+find dissert
+
+Output:
+2
+1
+0
