@@ -14,6 +14,7 @@
 #include <ctime>
 using namespace std;
 
+// Class representing puzzle pieces
 class Puzzle{
 	public:
 	int number;
@@ -49,7 +50,7 @@ class Puzzle{
 	}
 };
 
-
+// Checks values of North and West sides of pieces
 bool checkValue(int pos, Puzzle **board) {
 	string temp;
 	// Check North
@@ -72,7 +73,7 @@ bool checkValue(int pos, Puzzle **board) {
 }
 
 
-
+// Solves the puzzle, ensuring all neighboring pieces fit together properly
 void SolvePuzzle(int pos, Puzzle *pieces, Puzzle **board, bool *pieceAvailable, vector< vector< vector<string> > > *res) {
 	if (pos == 9) {
 		if ((board[0]->number < board[2]->number) && (board[0]->number < board[6]->number)
@@ -107,7 +108,7 @@ void SolvePuzzle(int pos, Puzzle *pieces, Puzzle **board, bool *pieceAvailable, 
 
 
 
-//Print all unique boards
+// Print all unique boards with the proper syntax
 void printUniqueBoards(vector<vector<vector<string> > > res) {
 	if ((res).size() == 0) {
 		cout << "No solution found." << endl;
