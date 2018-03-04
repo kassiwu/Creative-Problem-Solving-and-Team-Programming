@@ -118,7 +118,7 @@ void printUniqueBoards(vector<vector<vector<string> > > res) {
 	if ((res).size() == 0) {
 		cout << "No solution found." << endl;
 	} else if ((res).size() == 1) {
-		cout << (res).size() << " unique solution found:";
+		cout << (res).size() << " unique solution found:" << endl;
 	} else {
 		cout << (res).size() << " unique solutions found:" << endl;
 	}
@@ -227,7 +227,7 @@ int main(int argc, const char *argv[]) {
 
 	clock_t timeElapsed = clock() - start;
 	unsigned msElapsed = timeElapsed / (CLOCKS_PER_SEC / 1000);
-  cout << 	"Elapsed time: " << msElapsed <<" ms";
+  cout << 	"Elapsed time: " << msElapsed <<" ms" << endl;
 
 	// free memory
 	delete[] pieces;
