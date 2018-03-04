@@ -23,6 +23,7 @@ class Puzzle{
 	string bottom;
 	string left;
 	Puzzle(){}
+	// Initialize the piece with input values
 	void InitializePiece(int n, string t, string r, string b, string l) {
 		number = n;
 		top = t;
@@ -39,6 +40,7 @@ class Puzzle{
 		bottom = right;
 		right = temp;
 	}
+	// Stores values in an array
 	vector<string> toArray() {
 		vector<string> vec;
 		vec.push_back(to_string(number));
@@ -51,6 +53,7 @@ class Puzzle{
 };
 
 // Checks values of North and West sides of pieces
+// Returns true if adding the piece to the current board is valid, otherwise returns false
 bool checkValue(int pos, Puzzle **board) {
 	string temp;
 	// Check North
@@ -75,6 +78,7 @@ bool checkValue(int pos, Puzzle **board) {
 
 // Solves the puzzle, ensuring all neighboring pieces fit together properly
 void SolvePuzzle(int pos, Puzzle *pieces, Puzzle **board, bool *pieceAvailable, vector< vector< vector<string> > > *res) {
+	// If a solution is found, we add it to our solution set
 	if (pos == 9) {
 		if ((board[0]->number < board[2]->number) && (board[0]->number < board[6]->number)
 				&& (board[0]->number < board[8]->number)) {
@@ -88,11 +92,12 @@ void SolvePuzzle(int pos, Puzzle *pieces, Puzzle **board, bool *pieceAvailable, 
 		return;
 	}
 	for(int i = 0; i < 9; ++i) {
-		// Check if the piece is available
+		// Checks if the piece is available
 		if(pieceAvailable[i] == false) {
 			continue;
 		}
-		// Place the piece on the board
+		// Places the piece on the board
+		// Removes the last piece and back track if there is no solution with the current board
 		board[pos] = &pieces[i];
 		pieceAvailable[i] = false;
 		for(unsigned j = 0; j < 4; ++j) {
@@ -196,6 +201,7 @@ int main(int argc, const char *argv[]) {
 	vector< vector< vector<string> > > res;
 	int i = 0;
 	cout << "Input tiles:"  << endl;
+	// read in input from txt file
 	while (getline(input_file, line)) {
 	    		    stringstream linestream(line);
 	    		    string value;
@@ -221,11 +227,20 @@ int main(int argc, const char *argv[]) {
 
 	clock_t timeElapsed = clock() - start;
 	unsigned msElapsed = timeElapsed / (CLOCKS_PER_SEC / 1000);
-    cout << 	"Elapsed time: " << msElapsed <<" ms";
-    	return 0;
-    }
+  cout << 	"Elapsed time: " << msElapsed <<" ms";
 
+	// free memory
+	delete[] pieces;
+	pieces = NULL;
 
+	for (int i=0; i<9; i++) {
+		delete[] board[i];
+	}
+	delete[] board; //delete the array of pointers
+	board = NULL;
 
+	delete[] pieceAvailable;
+	pieceAvailable = NULL;
 
-
+	return 0;
+  }
