@@ -33,13 +33,14 @@ using namespace std;
 
 
 int main() {
-    // Quick and dirty solution using some IO tricks.
+    // Quick and dirty solution using some IO tricks, as shown to us by Dr. B
     ios::sync_with_stdio(false);
 
     // Read a single number as a string
 	string num;
 	cin >> num;
 	int n = num.size();
+    // Initialize the total at 0 and the power at 1
 	long long total = 0;
 	long long  pow = 1;
 	int i;
@@ -61,6 +62,7 @@ int main() {
 		pow = (pow*10)%mod;
 	}
 
+    // Final output to stdout
 	cout << total<< endl;
 	return 0;
 }

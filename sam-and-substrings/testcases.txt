@@ -1,4 +1,4 @@
-Testcases
+Testcases for substrings.cpp
 
 =====Test 1=====
 1
@@ -42,24 +42,24 @@ Output:
 467902019
 
 =====Test 7=====
-1357908642
+111000111
 
 Output:
-980623498
+136667540
 
 
 =====Test 8=====
-10
+444
 
 Output:
-11
+544
 
 
 =====Test 9=====
-231
+3291998
 
 Output:
-291
+4087863
 
 
 =====Test 10=====
@@ -67,4 +67,3 @@ Output:
 
 Output:
 114
-
