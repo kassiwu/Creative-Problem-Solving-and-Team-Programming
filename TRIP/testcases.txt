@@ -1,0 +1,94 @@
+Testcases for trip.py
+
+=====Test 1=====
+1
+abc
+acb
+
+Output:
+ab
+ac
+
+
+=====Test 2=====
+1
+aa
+aaa
+
+Output:
+aa
+
+
+=====Test 3=====
+1
+aaaaa
+abaaaa
+
+Output:
+aaaaa
+
+
+=====Test 4=====
+1
+this-is-a-test
+test-test-test
+
+
+
+Output:
+ts-s-test
+
+
+=====Test 5=====
+2
+abcabcaa
+acbacbaaa
+a
+ac
+
+Output:
+ababaa
+abacaa
+abcaaa
+abcbaa
+acabaa
+acacaa
+acbcaa
+
+a
+
+
+=====Test 6=====
+1
+abc
+defg
+
+Output:
+
+
+=====Test 7=====
+
+
+Output:
+
+
+
+=====Test 8=====
+
+
+Output:
+
+
+
+=====Test 9=====
+
+
+Output:
+
+
+
+=====Test 10=====
+
+
+Output:
+
