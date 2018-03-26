@@ -67,28 +67,78 @@ Output:
 
 
 =====Test 7=====
-
+2
+helloworld
+hellomars
+thequickbrownfoxjumpsoverthelazydog
+abcdefghijklmnopqrstuvwxyz
 
 Output:
+hellor
 
-
+eiknoprty
+eiknoprtz
+eiknopsty
+eiknopstz
+eiknopsvy
+eiknopsvz
+hiknoprty
+hiknoprtz
+hiknopsty
+hiknopstz
+hiknopsvy
+hiknopsvz
 
 =====Test 8=====
-
+1
+clipahundreddoveslikeabaldheadrasta
+twolettertexttranslationnext
 
 Output:
-
+lanslaet
+lansliet
+leeeaaet
+leeealat
+leeealet
+leeerasa
+leeerast
+leeslaet
+leesliet
+lreslaet
+lresliet
+oeeerasa
+oeeerast
+oleerasa
+oleerast
 
 
 =====Test 9=====
-
+1
+spitadiaphaniousgossamerand
+thenhesigneditincalligraphy
 
 Output:
-
+sidiaigra
+sidinigra
+sitiaigra
+sitinigra
 
 
 =====Test 10=====
+ilovestevens
+ilovenewjersey
+
+ilovestevens
+ihaterutgers
+
+ilovestevens
+doggos
 
 
 Output:
+iloveees
 
+ietes
+itees
+
+os
