@@ -21,38 +21,38 @@ def lcs_dp(s1, s2):
     for i in range(1, m + 1):
         for j in range(1, n + 1):
             if s1[i-1] == s2[j-1]:
-                T[i][j] = T[i - 1][j - 1] + 1  
+                T[i][j] = T[i - 1][j - 1] + 1
             else:
                 T[i][j] = max(T[i-1][j],T[i][j-1])
 
 
     def find_all_lcs(r, c):
         '''Traverse the 2D array starting from T[m][n]'''
-         # Use memorization
+         # Use memoization
         if (''.join(reversed(lcs)),r, c) in memo:
             return
         if r == 0 or c == 0:
-            #  Add to results
+            # Add to results
             all_lcs.append(''.join(reversed(lcs)))
             return
         if s1[r-1] == s2[c-1]:
-            # If characters corresponding to T[r][c] are same, then include this character as part of LCS
+            # If characters corresponding to T[r][c] are the same, then include the character as part of LCS
             lcs.append(s1[r - 1])
-            find_all_lcs(r-1, c-1) 
-            lcs.pop()  
-        # If they are not equal, then the longer of the two sequences is retained     
+            find_all_lcs(r-1, c-1)
+            lcs.pop()
+        # If they are not equal, then the longer of the two sequences is retained
         if T[r - 1][c] == T[r][c]:
             find_all_lcs(r-1, c)
         if T[r][c - 1] == T[r][c]:
             find_all_lcs(r, c-1)
         memo.add((''.join(reversed(lcs)),r, c))
-    
+
     all_lcs = []
     lcs = []
     memo = set()
     find_all_lcs(m,n)
     return all_lcs
-                   
+
 if __name__=='__main__':
     # Read in number of operations to perform
     N = int(input())
