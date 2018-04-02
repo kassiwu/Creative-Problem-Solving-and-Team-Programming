@@ -2,7 +2,7 @@
  * PathSumThreeWays.cpp
  *
  *  Created on: Mar 31, 2018
- *  Author: Dylan DiGeronimo, Jacob Fallin, Kexian Wu
+ *  Authors: Dylan DiGeronimo, Jacob Fallin, Kexian Wu
  *  I pledge my honor that I have abided by the Stevens Honor System.
  */
 
@@ -15,18 +15,18 @@
 using namespace std;
 const int INF= 1e9;
 
-void print_table(int** dp, int size) {
-	for (int i = 0;i<size;i++) {
-		for (int j = 0;j<size;j++) {
-			cout << dp[i][j] << " ";
-		}
-		cout << endl;
-	}
-}
+// Method to handle printing with proper formating, used for testing
+// void print_table(int** dp, int size) {
+// 	for (int i = 0;i<size;i++) {
+// 		for (int j = 0;j<size;j++) {
+// 			cout << dp[i][j] << " ";
+// 		}
+// 		cout << endl;
+// 	}
+// }
 
+// Method to enable backtracking through the matrix
 void backtrack(int** dp, vector<vector<int> > data, int size) {
-	cout << "Matrix: "<< endl;
-	print_table(dp,size);
 
 	int ans=INF;
 	int row_idx;
@@ -40,7 +40,6 @@ void backtrack(int** dp, vector<vector<int> > data, int size) {
 	}
 	// Print out the sum of shortest route
 	cout << "Min sum: " << ans << endl;
-	cout << "Start from row index: " << row_idx << endl;
 	int row = row_idx;
 	int col = size - 1;
 	while (col > 0) {
@@ -93,7 +92,7 @@ void backtrack(int** dp, vector<vector<int> > data, int size) {
 }
 
 
-
+// The main logic of our solution
 void solve(vector<vector<int> > data) {
 	int size = data.size();
 	// allocate table
@@ -148,17 +147,18 @@ void solve(vector<vector<int> > data) {
 
 
 int main() {
+	// Dr. B's C++ stdin speed trick
 	ios::sync_with_stdio(false);
 	cin.tie(NULL);
 	// Create an ifstream object
-    ifstream input_file("matrix1.txt");
+    ifstream input_file("matrix.txt");
     // If the file does not exist, print an error message and exit the program.
     if (!input_file) {
         cerr << "Error: Cannot read file 'matrix.txt'." << endl;
         return 1;
     }
 
-
+	// Get lines from matrix.txt
 	vector< vector<int> > data;
 	string line;
 	while (getline(input_file, line)) {
