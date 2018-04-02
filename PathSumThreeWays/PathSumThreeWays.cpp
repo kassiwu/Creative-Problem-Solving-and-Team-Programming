@@ -151,7 +151,7 @@ int main() {
 	ios::sync_with_stdio(false);
 	cin.tie(NULL);
 	// Create an ifstream object
-    ifstream input_file("matrix.txt");
+    ifstream input_file("matrix2.txt");
     // If the file does not exist, print an error message and exit the program.
     if (!input_file) {
         cerr << "Error: Cannot read file 'matrix.txt'." << endl;
