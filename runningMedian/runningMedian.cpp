@@ -65,6 +65,7 @@ int main() {
     MedianFinder mf;
     // Reads in the number of integers in the data stream
     cin >> n;
+	//Case for median of single number
 	if(n == 1) {
 		cin >> val;
 		median = double(val);
