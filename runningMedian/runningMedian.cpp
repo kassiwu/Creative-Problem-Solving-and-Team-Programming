@@ -12,6 +12,7 @@
 #include <queue>
 #include <iomanip>      // std::setprecision
 using namespace std;
+
 class MedianFinder {
 	public:
 		// Adds a number into the data structure
@@ -23,7 +24,7 @@ class MedianFinder {
 			else {
 				min_heap.push(x);
 			}
-			// Makes heaps balanced and and their sizes differ by at most 1
+			// Makes heaps balanced and their sizes differ by at most 1
 			// case 2:  max heap has more elements
 			if (max_heap.size() - 2 == min_heap.size()) {
 				min_heap.push(max_heap.top());
@@ -62,12 +63,19 @@ int main() {
     int n, val;
     double median;
     MedianFinder mf;
-    // Reads inthe number of integers in the data stream
+    // Reads in the number of integers in the data stream
     cin >> n;
-    while (n--) {
+	if(n == 1) {
+		cin >> val;
+		median = double(val);
+		cout << setprecision(1) << fixed << val << endl;
+	} else {
+		while (n--) {
     		cin >> val;
     		mf.insertHeap(val);
     		median = mf.getMedian();
-        cout << setprecision(1) << fixed << median << endl;
-    }
+        	cout << setprecision(1) << fixed << median << endl;
+   		}
+	}
+    
 }
