@@ -60,7 +60,6 @@ int main()
                 y++;
                 // Need to fill remaining and concat temp and remaining
             }
-
             ++count;
         }
         else if (query == 2)
