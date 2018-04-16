@@ -11,6 +11,7 @@
 import java.util.ArrayList;
 
 public class ReciprocalCycles {
+
 	private static String printResult(int denominator, ArrayList<Integer> digits, boolean cycle, int start_idx) {
 		int i;
 		StringBuilder newString = new StringBuilder();
@@ -19,11 +20,11 @@ public class ReciprocalCycles {
 		newString.append(Integer.toString(denominator));
 		newString.append(" = ");
 
-		// "digits" arrayList is empty only when denominator equals to 1
+		// "digits" arrayList is empty only when the denominator is 1
 		if (digits.isEmpty()) {
 			newString.append(1);
 		} else if (cycle == true) {
-			// there is a recurring pattern
+			// There is a recurring pattern
 			newString.append("0.");
 			for (i = 0; i < digits.size(); i++) {
 				if (i == start_idx) {
@@ -38,7 +39,7 @@ public class ReciprocalCycles {
 			newString.append(Integer.toString(digits.size() - start_idx));
 
 		}
-		// the case when cycle is false
+		// When a cycle is false
 		else {
 			newString.append("0.");
 			// Appends all digits
@@ -62,27 +63,28 @@ public class ReciprocalCycles {
 		try {
 			Integer.parseInt(args[0]);
 		} catch (Exception e) {
+			// Cause an error if the denominator is not of the the proper format
 			System.out.println("Error: Denominator must be an integer in [1, 2000]. Received '" + args[0] + "'.");
 			System.exit(-1);
 		}
 		// Parse the command line argument
 		int denominator = Integer.parseInt(args[0]);
 
-		// Check whether the number in the range [1,2000]
+		// Check whether the number is in the range [1, 2000]
 		if (denominator < 1 || denominator > 2000) {
-			System.out.println("Error: Denominator must be an integer in [1, 2000]. Received '" + denominator + "'.");
+			System.out.println("Error: Denominator must be an integer in range [1, 2000]. Received '" + denominator + "'.");
 			System.exit(-1);
 		}
 		// Initiate vectors to store remainders and decimals
 		ArrayList<Integer> remainders = new ArrayList<>();
 		ArrayList<Integer> digits = new ArrayList<>();
-		// Initiate values
+		// Initialize values
 		int mod = 1;
 		int digit = -1;
 		boolean cycle = false;
 		int start_idx = 0;
 		while (true) {
-			// find remainder
+			// Find the remainder
 			mod = mod % denominator;
 			// Test whether the number is terminating
 			if (mod == 0) {
