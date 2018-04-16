@@ -51,20 +51,64 @@ int main()
             // Execute query type 1
             cin >> i;
             cin >> j;
-            int temp[j - i];
-            int remaining[n];
+            int takeOut[j - i];
+            int preceding[i];
+            int succeeding[n - j];
+            // int finished[n];
             int y = i;
             for (int x = i; x <= j; x++)
             {
-                temp[x] = A[y];
+                // Get elements i to j and place them in a new array
+                takeOut[x] = A[y];
                 y++;
                 // Need to fill remaining and concat temp and remaining
             }
+            for (int x = 0; x < i; x++)
+            {
+                // Get elements preceding i to j
+                preceding[x] = A[x];
+            }
+            for (int x = j + 1; x <= n; x++)
+            {
+                // Get elements succeeding i to j
+                int temp = 0;
+                succeeding[temp] = A[x];
+                temp++;
+            }
+            // Append takeOut + preceding + succeeding and overwrite A
+
             ++count;
         }
         else if (query == 2)
         {
             // Execute query type 2
+            cin >> i;
+            cin >> j;
+            int takeOut[j - i];
+            int preceding[i];
+            int succeeding[n - j];
+            // int finished[n];
+            int y = i;
+            for (int x = i; x <= j; x++)
+            {
+                // Get elements i to j and place them in a new array
+                takeOut[x] = A[y];
+                y++;
+                // Need to fill remaining and concat temp and remaining
+            }
+            for (int x = 0; x < i; x++)
+            {
+                // Get elements preceding i to j
+                preceding[x] = A[x];
+            }
+            for (int x = j + 1; x <= n; x++)
+            {
+                // Get elements succeeding i to j
+                int temp = 0;
+                succeeding[temp] = A[x];
+                temp++;
+            }
+            // Append preceding + succeeding + takeOut and overwrite A
             ++count;
         }
         else
@@ -72,5 +116,15 @@ int main()
             cerr << "Error: query " << count << " is invalid" << endl;
             return 1;
         }
+        m--;
     }
+
+    // Get absolute value
+    int abso = abs(A[0] - A[n]);
+    
+    // Print abs 
+    cout << abso << endl;
+
+    // Print last array 
+    
 }
