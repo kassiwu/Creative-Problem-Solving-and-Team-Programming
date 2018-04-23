@@ -75,7 +75,7 @@ int main()
                 succeeding[temp] = A[x];
                 temp++;
             }
-            // Append takeOut + preceding + succeeding and overwrite A
+            // Need to append takeOut + preceding + succeeding and overwrite A
 
             ++count;
         }
@@ -108,7 +108,7 @@ int main()
                 succeeding[temp] = A[x];
                 temp++;
             }
-            // Append preceding + succeeding + takeOut and overwrite A
+            // Need to append preceding + succeeding + takeOut and overwrite A
             ++count;
         }
         else
