@@ -24,24 +24,32 @@ using namespace std;
 const long MAX_N = 100000l;
 
 // insert the (key, priority,size)
-typedef struct node{
+typedef struct Node{
     long value; // data/key field
     int priority; //rand() -- int type
     long size; // size -- tree size
-    struct node *left; // left child
-    struct node *right; // right child
-}node[MAX_N];
+    struct Node *left; // left child
+    struct Node *right; // right child
+}Node[MAX_N];
 
 
 long values[MAX_N];
+
+// get the size of a tree
+long getSize(Node *x) {
+  if (x != NULL) {
+    return x->size;
+  }
+  return 0;
+}
 
 // join two trees -- with no rotation
 // the heap order is to maintain a min heap
 // the merge operation merges two given treaps L and R into a single treap T
 // only care about immediate parent
 
-// all nodes in the left subtree are visited before the root is visited
-// and all nodes in the right subtree are visited after the root is visited
+// all Nodes in the left subtree are visited before the root is visited
+// and all Nodes in the right subtree are visited after the root is visited
 // A very important assumption of the merge operation is that the largest value of L is less than the smallest value of R
 Node *merge(Node *x, Node *y) {
   if (x == NULL) {
@@ -55,19 +63,13 @@ Node *merge(Node *x, Node *y) {
     x->size = getSize(x->left) + getSize(x->right) + 1;
     return x;
   } else {
-    y->left = join(x, y->l);
+    y->left = merge(x, y->left);
     y->size =  getSize(y->left) + getSize(y->right) + 1;
     return y;
   }
 }
 
-// get the size of a tree
-long getSize(Node *x) {
-  if (x != NULL) {
-    return x->size;
-  }
-  return 0;
-}
+
 
 
 //Helper function for extracting subtrees that recursively splits
@@ -107,14 +109,14 @@ Node *extract(Node *&n, long from, long to) {
     splitNode(n, middle, right, to);
     //split from middle to left
     splitNode(middle, left, middle, from);
-    //merge into node
+    //merge into Node
     n = merge(left, right);
     return n;
 }
 
 
 // in-order tree traversal
-// 1) visit node
+// 1) visit Node
 // 2) traverse left subtree
 // 3) traverse right subtree
 // Performs recursive Inorder traversal of a Given Binary Tree.
@@ -147,12 +149,12 @@ int main() {
    Node *tree = NULL;
 
   for (long i = 0; i < MAX_N; ++i) {
-    // initialize values in each node
-    cin >> nodes[i].value;
-    node[i].priority = rand();
-    node[i].size = 1;
+    // initialize values in each Node
+    cin >> Node[i].value;
+    Node[i].priority = rand();
+    Node[i].size = 1;
     // points to the root of the tree
-    tree = merge(tree, node + i);
+    tree = merge(tree, Node + i);
   }
 
 
@@ -193,8 +195,8 @@ int main() {
 
 
 // ***the heap order is to maintain a min heap
-// the nodes in the left subtree of the root will have data fields that are less than the data field of the root
-// the nodes in the right subtree of the root will have data fields that are greater than the data field of the root
+// the Nodes in the left subtree of the root will have data fields that are less than the data field of the root
+// the Nodes in the right subtree of the root will have data fields that are greater than the data field of the root
 // the left and right subtrees are binary search trees
 // the priority value of the root is greater than the priority value of its children
 // the left and right subtrees are max heaps
