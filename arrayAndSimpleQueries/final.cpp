@@ -7,7 +7,6 @@
  *  Problem: https://www.hackerrank.com/challenges/array-and-simple-queries/problem
  */
 
-
 #include <cmath>
 #include <cstdio>
 #include <vector>
@@ -25,21 +24,34 @@ using namespace std;
 const int MAX_N = 100000;
 
 // insert the (key, priority,size)
- struct Node{
-    int value; // data/key field
-    int priority; //rand() -- int type
-    int size; // size -- tree size
-     Node *left; // left child
-     Node *right; // right child
-}node[MAX_N];
-
-
+struct Node
+{
+  int value;    // data/key field
+  int priority; //rand() -- int type
+  int size;     // size -- tree size
+  Node *left;   // left child
+  Node *right;  // right child
+  int Value()
+  {
+    return value;
+  }
+  Node *Left()
+  {
+    return left;
+  }
+  Node *Right()
+  {
+    return right;
+  }
+} node[MAX_N];
 
 int values[MAX_N];
 
 // get the size of a tree
-int getSize(Node *x) {
-  if (x != NULL) {
+int getSize(Node *x)
+{
+  if (x != NULL)
+  {
     return x->size;
   }
   return 0;
@@ -53,86 +65,93 @@ int getSize(Node *x) {
 // all Nodes in the left subtree are visited before the root is visited
 // and all Nodes in the right subtree are visited after the root is visited
 // A very important assumption of the merge operation is that the largest value of L is less than the smallest value of R
-Node *merge(Node *x, Node *y) {
-  if (x == NULL) {
+Node *merge(Node *x, Node *y)
+{
+  if (x == NULL)
+  {
     return y;
   }
-  if (y == NULL) {
+  if (y == NULL)
+  {
     return x;
   }
-  if (x->priority < y->priority) {
-    x->right = merge(x->right, y);
-    x->size = getSize(x->left) + getSize(x->right) + 1;
+  if (x->priority < y->priority)
+  {
+    x->Right() = merge(x->Right(), y);
+    x->size = getSize(x->Left()) + getSize(x->Right()) + 1;
     return x;
-  } else {
-    y->left = merge(x, y->left);
-    y->size =  getSize(y->left) + getSize(y->right) + 1;
+  }
+  else
+  {
+    y->Left() = merge(x, y->Left());
+    y->size = getSize(y->Left()) + getSize(y->Right()) + 1;
     return y;
   }
 }
 
-
-
-
 //Helper function for extracting subtrees that recursively splits
-void splitNode(Node *n, Node*& left, Node*& right, int val) {
+void splitNode(Node *n, Node *&left, Node *&right, int val)
+{
 
-  if(n != NULL) {
+  if (n != NULL)
+  {
     //get max possible size
-    int max = getSize(n->left)+1;
+    int max = getSize(n->left) + 1;
 
     //if in the bounds split right
-    if(max > val) {
-      splitNode(n->right, n->right, right, (val-max));
+    if (max > val)
+    {
+      splitNode(n->right, n->right, right, (val - max));
       left = n;
-    } else {
+    }
+    else
+    {
       //else split left
       splitNode(n->left, left, n->left, val);
       right = n;
     }
-    n->size =  getSize(left) + getSize(right) + 1;
- 
-  } else {
-      //set to null and ignore
-      right = NULL;
-      left = NULL;
-
+    n->size = getSize(left) + getSize(right) + 1;
+  }
+  else
+  {
+    //set to null and ignore
+    right = NULL;
+    left = NULL;
   }
 }
 
-
 //in order to get the subtree must be able to spit into subtrees
-Node *extract(Node *&n, int from, int to) {
+Node *extract(Node *&n, int from, int to)
+{
 
-    Node *left, *right, *middle;
+  Node *left, *right, *middle;
 
-    //split from to right to middle 
-    splitNode(n, middle, right, to);
-    //split from middle to left
-    splitNode(middle, left, middle, from);
-    //merge into Node
-    n = merge(left, right);
-    return middle;
+  //split from to right to middle
+  splitNode(n, middle, right, to);
+  //split from middle to left
+  splitNode(middle, left, middle, from);
+  //merge into Node
+  n = merge(left, right);
+  return middle;
 }
-
 
 // in-order tree traversal
 // 1) visit Node
 // 2) traverse left subtree
 // 3) traverse right subtree
 // Performs recursive Inorder traversal of a Given Binary Tree.
-void Inorder(Node *x) {
-  int i = 0;
-  if(x != NULL) {
-    Inorder(x->left);
-    printf("%d", x->value);
-    Inorder(x->right);
+void Inorder(Node *x)
+{
+  if (x != NULL)
+  {
+    Inorder(x->Left());
+    cout << x->Value() << " ";
+    Inorder(x->Right());
   }
 }
 
-
-
-int main() {
+int main()
+{
   // Dr. B's io speed trick
   ios::sync_with_stdio(false);
   cin.tie(NULL);
@@ -146,13 +165,13 @@ int main() {
    * or 2 i j (remove from i to j and move to back)
    */
 
-   int n, m;
-cin >> n;
-cin >> m;
-   Node *tree = NULL;
+  int n, m;
+  cin >> n;
+  cin >> m;
+  Node *tree = NULL;
 
-
-  for (int i = 0; i < n; i++) {
+  for (int i = 0; i < n; i++)
+  {
     // initialize values in each Node
 
     cin >> node[i].value;
@@ -162,45 +181,40 @@ cin >> m;
     tree = merge(tree, node + i);
   }
 
+  while (m--)
+  {
+    int type, i, j;
 
-
-  while (m--) {
-  int type, i, j;
-
-    cin >> type; 
+    cin >> type;
     cin >> i;
     cin >> j;
 
-
-    Node *subtree = extract(tree, i-1, j);
+    Node *subtree = extract(tree, i - 1, j);
     // Modify the given array by removing elements from i to j and adding them to the front
-    if (type == 1) {
+    if (type == 1)
+    {
       // points to the root of the tree
-       tree = merge(subtree, tree);
+      tree = merge(subtree, tree);
     }
     // Modify the given array by removing elements from i to j and adding them to the back
-    else if (type == 2) {
+    else if (type == 2)
+    {
       // points to the root of the tree
-       tree = merge(tree,subtree);
+      tree = merge(tree, subtree);
     }
   }
-  // Store values of each in an array using in-order traversal
+  // Print values of tree using in-order traversal
   Inorder(tree);
 
-
-  cout << abs(values[0] - values[n-1]) << endl;
-  for (int i = 0; i < n; ++i) {
-    cout << values[i] << " ";
-  }
-  cout << endl;
+  // cout << abs(values[0] - values[n - 1]) << endl;
+  // for (int i = 0; i < n; ++i)
+  // {
+  //   cout << values[i] << " ";
+  // }
+  // cout << endl;
 
   return 0;
 }
-
-
-
-
-
 
 // ***the heap order is to maintain a min heap
 // the Nodes in the left subtree of the root will have data fields that are less than the data field of the root
