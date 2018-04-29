@@ -65,7 +65,6 @@ int getSize(Node *x)
 
 // all Nodes in the left subtree are visited before the root is visited
 // and all Nodes in the right subtree are visited after the root is visited
-// A very important assumption of the merge operation is that the largest value of L is less than the smallest value of R
 Node *merge(Node *x, Node *y)
 {
   if (x == NULL)
@@ -90,51 +89,36 @@ Node *merge(Node *x, Node *y)
   }
 }
 
+
 //Helper function for extracting subtrees that recursively splits
-void splitNode(Node *n, Node *&left, Node *&right, int val)
+void splitNode(Node *n, int k, Node *&l, Node *&r)
 {
-
-  if (n != NULL)
-  {
-    //get max possible size
-    int max = getSize(n->left) + 1;
-
-    //if in the bounds split right
-    if (max > val)
-    {
-      splitNode(n->right, n->right, right, (val - max));
-      left = n;
+  if (! n)
+    l = r = NULL;
+  else {
+    int c = getSize(n->left) + 1;
+    if (k < c) {
+      splitNode(n->left, k, l, n->left);
+      r = n;
+    } else {
+      splitNode(n->right, k-c, n->right, r);
+      l = n;
     }
-    else
-    {
-      //else split left
-      splitNode(n->left, left, n->left, val);
-      right = n;
-    }
-    n->size = getSize(left) + getSize(right) + 1;
-  }
-  else
-  {
-    //set to null and ignore
-    right = NULL;
-    left = NULL;
+    n->size = getSize(n->left) + getSize(n->right) + 1;
   }
 }
 
 //in order to get the subtree must be able to spit into subtrees
 Node *extract(Node *&n, int from, int to)
 {
-
   Node *left, *right, *middle;
-
-  //split from to right to middle
-  splitNode(n, middle, right, to);
-  //split from middle to left
-  splitNode(middle, left, middle, from);
-  //merge into Node
+  splitNode(n, to, middle, right);
+  splitNode(middle, from, left, middle);
   n = merge(left, right);
   return middle;
 }
+
+
 
 // in-order tree traversal
 // 1) visit Node
@@ -168,12 +152,12 @@ int main()
    * or 2 i j (remove from i to j and move to back)
    */
 
-  int n, m;
+  long n, m;
   cin >> n;
   cin >> m;
   Node *tree = NULL;
 
-  for (int i = 0; i < n; i++)
+  for (long i = 0; i < n; i++)
   {
     // initialize values in each Node
 
@@ -186,8 +170,8 @@ int main()
 
   while (m--)
   {
-    int type, i, j;
-
+    int type;
+    long i, j;
     cin >> type;
     cin >> i;
     cin >> j;
@@ -210,7 +194,7 @@ int main()
   Inorder(tree);
 
   cout << abs(values[0] - values[n - 1]) << endl;
-  for (int i = 0; i < n; ++i)
+  for (long i = 0; i < n; ++i)
   {
     cout << values[i] << " ";
   }
@@ -218,12 +202,3 @@ int main()
 
   return 0;
 }
-
-// ***the heap order is to maintain a min heap
-// the Nodes in the left subtree of the root will have data fields that are less than the data field of the root
-// the Nodes in the right subtree of the root will have data fields that are greater than the data field of the root
-// the left and right subtrees are binary search trees
-// the priority value of the root is greater than the priority value of its children
-// the left and right subtrees are max heaps
-
-// follow the rules of binary search tree and heap to maintain the tree
