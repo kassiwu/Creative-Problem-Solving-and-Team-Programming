@@ -12,6 +12,7 @@
 #include <cstdio>
 #include <vector>
 #include <iostream>
+#include <stack>
 #include <algorithm>
 using namespace std;
 
@@ -21,22 +22,23 @@ using namespace std;
 // 2) priority field -- random value
 
 // 1<=N<=10^5
-const long MAX_N = 100000l;
+const int MAX_N = 100000;
 
 // insert the (key, priority,size)
-typedef struct Node{
-    long value; // data/key field
+ struct Node{
+    int value; // data/key field
     int priority; //rand() -- int type
-    long size; // size -- tree size
-    struct Node *left; // left child
-    struct Node *right; // right child
-}Node[MAX_N];
+    int size; // size -- tree size
+     Node *left; // left child
+     Node *right; // right child
+}node[MAX_N];
 
 
-long values[MAX_N];
+
+int values[MAX_N];
 
 // get the size of a tree
-long getSize(Node *x) {
+int getSize(Node *x) {
   if (x != NULL) {
     return x->size;
   }
@@ -73,23 +75,22 @@ Node *merge(Node *x, Node *y) {
 
 
 //Helper function for extracting subtrees that recursively splits
-void splitNode(Node *n, Node*& left, Node*& right, long val) {
+void splitNode(Node *n, Node*& left, Node*& right, int val) {
 
   if(n != NULL) {
-
     //get max possible size
     int max = getSize(n->left)+1;
 
     //if in the bounds split right
     if(max > val) {
-      splitNode(n->right, n->right, right, (max-val));
+      splitNode(n->right, n->right, right, (val-max));
       left = n;
     } else {
       //else split left
       splitNode(n->left, left, n->left, val);
       right = n;
     }
-    x->size =  getSize(left) + getSize(right) + 1;
+    n->size =  getSize(left) + getSize(right) + 1;
  
   } else {
       //set to null and ignore
@@ -101,7 +102,7 @@ void splitNode(Node *n, Node*& left, Node*& right, long val) {
 
 
 //in order to get the subtree must be able to spit into subtrees
-Node *extract(Node *&n, long from, long to) {
+Node *extract(Node *&n, int from, int to) {
 
     Node *left, *right, *middle;
 
@@ -111,7 +112,7 @@ Node *extract(Node *&n, long from, long to) {
     splitNode(middle, left, middle, from);
     //merge into Node
     n = merge(left, right);
-    return n;
+    return middle;
 }
 
 
@@ -123,11 +124,13 @@ Node *extract(Node *&n, long from, long to) {
 void Inorder(Node *x) {
   int i = 0;
   if(x != NULL) {
-    printInorder(x->left);
-    values[i++] = x->value;
-    printInorder(x->right);
+    Inorder(x->left);
+    printf("%d", x->value);
+    Inorder(x->right);
   }
 }
+
+
 
 int main() {
   // Dr. B's io speed trick
@@ -143,27 +146,32 @@ int main() {
    * or 2 i j (remove from i to j and move to back)
    */
 
-   long n, m;
-   cin >> n;
-   cin >> m;
+   int n, m;
+cin >> n;
+cin >> m;
    Node *tree = NULL;
 
-  for (long i = 0; i < MAX_N; ++i) {
+
+  for (int i = 0; i < n; i++) {
     // initialize values in each Node
-    cin >> Node[i].value;
-    Node[i].priority = rand();
-    Node[i].size = 1;
+
+    cin >> node[i].value;
+    node[i].priority = rand();
+    node[i].size = 1;
     // points to the root of the tree
-    tree = merge(tree, Node + i);
+    tree = merge(tree, node + i);
   }
 
 
-  int type, i, j;
 
   while (m--) {
-    cin >> type;
+  int type, i, j;
+
+    cin >> type; 
     cin >> i;
     cin >> j;
+
+
     Node *subtree = extract(tree, i-1, j);
     // Modify the given array by removing elements from i to j and adding them to the front
     if (type == 1) {
@@ -181,7 +189,7 @@ int main() {
 
 
   cout << abs(values[0] - values[n-1]) << endl;
-  for (long i = 0; i < n; ++i) {
+  for (int i = 0; i < n; ++i) {
     cout << values[i] << " ";
   }
   cout << endl;
