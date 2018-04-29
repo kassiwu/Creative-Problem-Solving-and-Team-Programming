@@ -46,6 +46,7 @@ struct Node
 } node[MAX_N];
 
 int values[MAX_N];
+int inc = 0;
 
 // get the size of a tree
 int getSize(Node *x)
@@ -77,13 +78,13 @@ Node *merge(Node *x, Node *y)
   }
   if (x->priority < y->priority)
   {
-    x->Right() = merge(x->Right(), y);
+    x->right = merge(x->Right(), y);
     x->size = getSize(x->Left()) + getSize(x->Right()) + 1;
     return x;
   }
   else
   {
-    y->Left() = merge(x, y->Left());
+    y->left = merge(x, y->Left());
     y->size = getSize(y->Left()) + getSize(y->Right()) + 1;
     return y;
   }
@@ -145,7 +146,9 @@ void Inorder(Node *x)
   if (x != NULL)
   {
     Inorder(x->Left());
-    cout << x->Value() << " ";
+    // cout << x->Value() << " ";
+    values[inc] = x->Value();
+    inc++;
     Inorder(x->Right());
   }
 }
@@ -203,15 +206,15 @@ int main()
       tree = merge(tree, subtree);
     }
   }
-  // Print values of tree using in-order traversal
+  // Store values of tree using in-order traversal
   Inorder(tree);
 
-  // cout << abs(values[0] - values[n - 1]) << endl;
-  // for (int i = 0; i < n; ++i)
-  // {
-  //   cout << values[i] << " ";
-  // }
-  // cout << endl;
+  cout << abs(values[0] - values[n - 1]) << endl;
+  for (int i = 0; i < n; ++i)
+  {
+    cout << values[i] << " ";
+  }
+  cout << endl;
 
   return 0;
 }
