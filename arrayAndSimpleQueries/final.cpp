@@ -93,8 +93,9 @@ Node *merge(Node *x, Node *y)
 //Helper function for extracting subtrees that recursively splits
 void splitNode(Node *n, int k, Node *&l, Node *&r)
 {
-  if (! n)
+  if (! n) {
     l = r = NULL;
+  }
   else {
     int c = getSize(n->left) + 1;
     if (k < c) {
