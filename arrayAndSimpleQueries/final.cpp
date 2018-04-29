@@ -94,14 +94,17 @@ Node *merge(Node *x, Node *y)
 void splitNode(Node *n, int k, Node *&l, Node *&r)
 {
   if (! n) {
+    //set to null and ignore
     l = r = NULL;
   }
   else {
     int c = getSize(n->left) + 1;
     if (k < c) {
+      // if in the bounds split right
       splitNode(n->left, k, l, n->left);
       r = n;
     } else {
+      //if in the bounds split right
       splitNode(n->right, k-c, n->right, r);
       l = n;
     }
@@ -115,6 +118,7 @@ Node *extract(Node *&n, int from, int to)
   Node *left, *right, *middle;
   splitNode(n, to, middle, right);
   splitNode(middle, from, left, middle);
+  //merge into Node
   n = merge(left, right);
   return middle;
 }
