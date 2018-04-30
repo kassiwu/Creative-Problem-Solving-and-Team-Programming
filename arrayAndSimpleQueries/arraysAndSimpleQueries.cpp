@@ -15,7 +15,6 @@
 #include <algorithm>
 using namespace std;
 
-// Tittle: Treaps Data Structure
 // Treaps = BST + heap
 // 1) data/key field
 // 2) priority field -- random value
@@ -31,31 +30,19 @@ struct Node
   int size;     // size -- tree size
   Node *left;   // left child
   Node *right;  // right child
-  int Value()
-  {
-    return value;
-  }
-  Node *Left()
-  {
-    return left;
-  }
-  Node *Right()
-  {
-    return right;
-  }
 } node[MAX_N];
 
 int values[MAX_N];
 int inc = 0;
 
 // get the size of a tree
-int getSize(Node *n) 
+int getSize(Node *n)
 {
-    if(n == NULL)
-    {
-      return 0;
-    }
-    return n->size;
+  if (n == NULL)
+  {
+    return 0;
+  }
+  return n->size;
 }
 
 // join two trees -- with no rotation
@@ -80,48 +67,47 @@ Node *merge(Node *n1, Node *n2)
   if (n1->priority < n2->priority)
   {
     //merge right subtree recursively
-    n1->right = merge(n1->Right(), y);
+    n1->right = merge(n1->right, n2);
     //increase size
-    n1->size = getSize(n1->Left()) + getSize(n1->Right()) + 1;
-    return x;
+    n1->size = getSize(n1->left) + getSize(n1->right) + 1;
+    return n1;
   }
-  //if x priority is higher 
+  //if x priority is higher
   else
   {
     //merge left subtree recursively
-    n2->left = merge(n1, n2->Left());
+    n2->left = merge(n1, n2->left);
     //increase size
-    n2->size = getSize(n2->Left()) + getSize(n2->Right()) + 1;
-    return y;
+    n2->size = getSize(n2->left) + getSize(n2->right) + 1;
+    return n2;
   }
 }
-
 
 //Helper function for extracting subtrees that recursively splits
 void splitNode(Node *n, Node *&left, Node *&right, int value)
 {
-  if (!n) 
+  if (!n)
   {
     //set to null and ignore
     left = NULL;
     right = NULL;
   }
-  else 
+  else
   {
-    //use left subtree 
+    //use left subtree
     int maxSize = getSize(n->left) + 1;
     //if left subtree is greater than value
-    if (value < maxSize) 
+    if (value < maxSize)
     {
       // if in the bounds split right
       right = n;
       splitNode(n->left, left, n->left, value);
-    } 
-    else 
+    }
+    else
     {
       //if in the bounds split right
       left = n;
-      splitNode(n->right, n->right, right, value-maxSize);
+      splitNode(n->right, n->right, right, value - maxSize);
     }
     //increase tree size
     n->size = getSize(n->left) + getSize(n->right) + 1;
@@ -132,7 +118,7 @@ void splitNode(Node *n, Node *&left, Node *&right, int value)
 Node *extract(Node *&n, int from, int to)
 {
   Node *left, *right, *middle;
-  //split from right 
+  //split from right
   splitNode(n, middle, right, to);
   //split from left
   splitNode(middle, left, middle, from);
@@ -141,20 +127,19 @@ Node *extract(Node *&n, int from, int to)
   return middle;
 }
 
-// in-order tree traversal
-// 1) visit Node
+// Inorder tree traversal
+// 1) visit node
 // 2) traverse left subtree
 // 3) traverse right subtree
-// Performs recursive Inorder traversal of a Given Binary Tree.
+// Performs recursive Inorder traversal of a given binary tree.
 void Inorder(Node *n)
 {
   if (n != NULL)
   {
-    Inorder(n->Left());
-    // cout << x->Value() << " ";
-    values[inc] = n->Value();
+    Inorder(n->left);
+    values[inc] = n->value;
     inc++;
-    Inorder(n->Right());
+    Inorder(n->right);
   }
 }
 
