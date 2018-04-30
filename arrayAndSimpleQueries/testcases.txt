@@ -1,6 +1,7 @@
 Dylan DiGeronimo, Kexian Wu, Jake Fallin
 CS-370
 Testcases for arraysAndSimpleQueries.cpp
+I pledge my honor that I have abided by the Stevens Honor System
 
 =====Test 1=====
 Input:
